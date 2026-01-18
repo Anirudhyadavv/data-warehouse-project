@@ -27,7 +27,7 @@ USE dw_bronze;
 -- Loading crm_cust_info (Customer Master Data)
 -- Source: cust_info.csv
 TRUNCATE TABLE crm_cust_info;
-LOAD DATA LOCAL INFILE "Local date source path"
+LOAD DATA LOCAL INFILE "Local data source path"
 INTO TABLE dw_bronze.crm_cust_info
 FIELDS TERMINATED BY ',' 
 LINES TERMINATED BY '\r\n'
@@ -36,7 +36,8 @@ IGNORE 1 ROWS;
 -- Loading crm_prd_info (Product Master Data)
 -- Source: prd_info.csv
 TRUNCATE TABLE crm_prd_info;
-LOAD DATA LOCAL INFILE "Local date source path"
+LOAD DATA LOCAL INFILE "Local data source path"
+INTO TABLE dw_bronze.crm_prd_info
 FIELDS TERMINATED BY ',' 
 LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS;
@@ -58,7 +59,7 @@ IGNORE 1 ROWS;
 -- Loading erp_cust_az12 (Supplemental Customer Information)
 -- Source: CUST_AZ12.csv
 TRUNCATE TABLE erp_cust_az12;
-LOAD DATA LOCAL INFILE "Local date source path"
+LOAD DATA LOCAL INFILE "Local data source path"
 INTO TABLE dw_bronze.erp_cust_az12
 FIELDS TERMINATED BY ',' 
 LINES TERMINATED BY '\r\n'
@@ -67,7 +68,7 @@ IGNORE 1 ROWS;
 -- Loading erp_loc_a101 (Customer Geographic Mapping)
 -- Source: LOC_A101.csv
 TRUNCATE TABLE erp_loc_a101;
-LOAD DATA LOCAL INFILE "Local date source path"
+LOAD DATA LOCAL INFILE "Local data source path"
 INTO TABLE dw_bronze.erp_loc_a101
 FIELDS TERMINATED BY ',' 
 LINES TERMINATED BY '\r\n'
@@ -76,7 +77,7 @@ IGNORE 1 ROWS;
 -- Loading erp_px_cat_gv12 (Product Category Hierarchy)
 -- Source: PX_CAT_G1V2.csv
 TRUNCATE TABLE erp_px_cat_gv12;
-LOAD DATA LOCAL INFILE "Local date source path"
+LOAD DATA LOCAL INFILE "Local data source path"
 INTO TABLE dw_bronze.erp_px_cat_gv12
 FIELDS TERMINATED BY ',' 
 LINES TERMINATED BY '\r\n'
