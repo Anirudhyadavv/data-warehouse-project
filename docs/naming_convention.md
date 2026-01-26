@@ -1,70 +1,68 @@
-This is a professional Markdown (.md) version of your naming conventions document, optimized for a GitHub or GitLab repository. I have cleaned up the formatting, improved the layout for readability, and added a "Best Practices" section to help you explain the logic behind these choices during an interview.
+# 📁 Data Warehouse Naming Conventions
 
-Data Warehouse Naming Conventions
-1. Overview
-This document outlines the standard naming conventions used for schemas, tables, views, columns, and other objects within the data warehouse. Adhering to these standards ensures consistency, maintainability, and clarity across the Bronze, Silver, and Gold layers.
+This document defines the architectural standards for naming schemas, tables, views, and columns within the Data Warehouse. Consistent naming ensures that the data lineage remains clear as it moves from raw ingestion to business-ready reporting.
 
-2. General Principles
-Case Style: Use snake_case (all lowercase letters with underscores separating words).
+---
 
-Language: All object names must be in English.
+## 📑 Table of Contents
+1. [General Principles](#general-principles)
+2. [Table Naming Conventions](#table-naming-conventions)
+   - [Bronze Layer](#bronze-layer)
+   - [Silver Layer](#silver-layer)
+   - [Gold Layer](#gold-layer)
+3. [Column Naming Conventions](#column-naming-conventions)
+4. [Stored Procedure Standards](#stored-procedure-standards)
 
-Reserved Words: Avoid using SQL reserved words (e.g., SELECT, TABLE, ORDER) as object names.
+---
 
-Scannability: Names should be descriptive enough that a business user can understand the content without a manual.
+## ⚖️ General Principles
+- **Case Style:** `snake_case` (all lowercase, underscores for spaces).
+- **Language:** All identifiers must be in English.
+- **Reserved Words:** Never use SQL reserved keywords (e.g., `SELECT`, `FROM`, `GROUP`) as object names.
+- **Scannability:** Names should be intuitive for both developers and business analysts.
 
-3. Table & View Naming Conventions
-🥉 Bronze Layer (Raw)
-Bronze tables act as a mirror of the source systems.
+---
 
-Pattern: <source_system>_<original_table_name>
+## 🏗️ Table Naming Conventions
 
-Rules: Do not rename the source table; maintain the original structure.
+### 🥉 Bronze Layer (Raw)
+The Bronze layer stores data in its original form. Names must preserve the source identity.
+- **Pattern:** `<source_system>_<original_table_name>`
+- **Example:** `crm_customer_info`
 
-Example: crm_customer_info
+### 🥈 Silver Layer (Cleaned)
+The Silver layer stores deduplicated and standardized data.
+- **Pattern:** `<source_system>_<original_table_name>`
+- **Example:** `erp_loc_a101`
 
-🥈 Silver Layer (Cleaned)
-Silver tables contain deduplicated and standardized data.
+### 🥇 Gold Layer (Curated)
+The Gold layer uses business-friendly names organized into a Star Schema.
+- **Pattern:** `<category>_<business_entity>`
 
-Pattern: <source_system>_<original_table_name>
+| Pattern | Meaning | Example(s) |
+|:---|:---|:---|
+| `dim_` | **Dimension Table:** Descriptive attributes. | `dim_customers`, `dim_products` |
+| `fact_` | **Fact Table:** Quantitative metrics/transactions. | `fact_sales` |
+| `report_` | **Report Table:** Pre-aggregated data for specific views. | `report_monthly_sales` |
 
-Rules: While the structure is cleaned, the naming follows the source system to maintain lineage.
+---
 
-Example: erp_loc_a101
+## 🏷️ Column Naming Conventions
 
-🥇 Gold Layer (Curated/Analytical)
-Gold tables use business-aligned names and are organized by their role in a Star Schema.
+### 🔑 Surrogate Keys
+All primary keys in the Gold layer dimensions must use a surrogate key suffix.
+- **Pattern:** `<entity>_key`
+- **Logic:** Unique integers (usually generated via `ROW_NUMBER()`) that act as a stable join-bridge between Facts and Dimensions.
+- **Example:** `customer_key`
 
-Pattern: <category>_<business_entity>
 
-Categories: | Pattern | Meaning | Example | | :--- | :--- | :--- | | dim_ | Dimension Table | dim_customers, dim_products | | fact_ | Fact Table | fact_sales | | report_ | Specific Reporting View | report_monthly_sales |
 
-4. Column Naming Conventions
-🔑 Surrogate Keys
-All primary keys in the Gold layer dimension tables must use a surrogate key suffix.
+### 🛠️ Technical Columns
+Metadata columns used for auditing and data lineage.
+- **Pattern:** `dwh_<purpose>`
+- **Example:** `dwh_load_date` (The timestamp indicating when the record was processed).
 
-Pattern: <entity>_key
+---
 
-Purpose: To uniquely identify records independently of source system IDs.
-
-Example: customer_key, product_key.
-
-🛠️ Technical Columns (Metadata)
-System-generated columns used for auditing and tracking data lineage.
-
-Pattern: dwh_<column_purpose>
-
-Example: dwh_load_date (The timestamp when the record entered the warehouse).
-
-5. Stored Procedures
-All procedures used for ETL/ELT orchestration must follow a functional naming pattern.
-
-Pattern: load_<layer_name>
-
-Examples:
-
-load_bronze: Moves data from source to Bronze.
-
-load_silver: Cleans and transforms data into Silver.
-
-load_gold: Aggregates and models data for the final Gold layer.
+## ⚙️ Stored Procedure Standards
+All ETL/ELT orchestration logic must be encapsulated
