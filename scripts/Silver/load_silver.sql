@@ -1,3 +1,30 @@
+/*
+===============================================================================
+Stored Procedure: Load Silver Layer (Bronze -> Silver)
+===============================================================================
+Script Purpose:
+    This procedure represents the "Engine of Truth" for the Data Warehouse. 
+    Its primary objective is to transition data from the Raw Bronze staging 
+    area into a Cleaned, Standardized, and Validated Silver layer.
+
+Business Logic & Transformations:
+    - Data Cleansing: Trims leading/trailing whitespaces to prevent join 
+      failures in the Gold Layer.
+    - Standardization: Unifies inconsistent source values (e.g., mapping 'M', 
+      'Male', 'MALE' to 'Male') to ensure reliable demographic reporting.
+    - Data Integrity: Implements validation rules to correct pricing and 
+      sales calculations where source values are missing or zero.
+    - Observability: Captures execution metrics and row counts into a unified 
+      summary for pipeline health monitoring.
+
+Usage:
+    - Execute 'CALL dw_silver.load_silver();' to refresh the cleaned datasets.
+    - Use the output summary to verify that data volume matches upstream sources.
+===============================================================================
+*/
+
+
+
 SELECT * FROM dw_silver.crm_cust_info;
 
 -----------------------------------------------------------------
