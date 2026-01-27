@@ -4,7 +4,7 @@ DDL Script: Create Bronze Tables
 ===============================================================================
 Script Purpose:
     This script initializes the 'dw_bronze' schema. It represents the 
-    "Landing Zone" or "Raw Staging Area" where data is ingested exactly 
+    "Raw Staging Area" where data is ingested exactly 
     as it exists in the source systems (CRM and ERP).
 
 Data Lineage:
