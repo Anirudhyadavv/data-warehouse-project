@@ -4,22 +4,26 @@ DDL Script: Create Bronze Tables
 ===============================================================================
 Script Purpose:
     This script initializes the 'dw_bronze' schema. It represents the 
-    "Raw Staging Area" where data is ingested exactly 
-    as it exists in the source systems (CRM and ERP).
+    "Raw Staging Area" where data is ingested exactly as it exists in 
+    the source systems (CRM and ERP).
 
 Data Lineage:
     - CRM System: Customer, Product, and Sales Transactional data.
     - ERP System: Supplemental demographics, Geography, and Product Categories.
 
+Usage:
+    Run this script once to initialize the Bronze Layer structure. 
+    WARNING: Dropping tables will delete all existing data in this layer.
+
+
 Layer: Bronze (Raw)
 ===============================================================================
 */
-
 -- ============================================================================
 -- 1. DROP EXISTING TABLES
 -- ============================================================================
 -- Ensures a clean deployment. 
--- Note: In production, consider RENAME or ARCHIVE instead of DROP.
+
 DROP TABLE IF EXISTS dw_bronze.crm_cust_info;
 DROP TABLE IF EXISTS dw_bronze.crm_prd_info;
 DROP TABLE IF EXISTS dw_bronze.crm_sales_details;
