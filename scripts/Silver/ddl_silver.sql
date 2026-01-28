@@ -3,14 +3,12 @@
 Stored Procedure: Create Silver Schema Tables
 ===============================================================================
 Purpose:
-    This procedure initializes the physical schema of the Silver layer by
-    creating standardized, analytics-ready tables required for downstream
-    transformations and reporting.
+    Script Purpose:
+    This procedure initializes the physical structure of the Silver Layer.
+    It drops existing tables and recreates them to ensure a clean, 
+    standardized environment for data transformation.
 
-    Existing Silver tables are safely dropped and recreated to guarantee a
-    consistent and predictable structure prior to data loading.
-
-Design Principles:
+**Design Principles**:
     - Idempotency: Uses 'DROP TABLE IF EXISTS' to allow safe re-execution.
     - Schema Governance: Enforces controlled table definitions and naming
       conventions across the Silver layer.
