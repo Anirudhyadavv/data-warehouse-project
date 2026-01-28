@@ -8,7 +8,7 @@ Purpose:
     It drops existing tables and recreates them to ensure a clean, 
     standardized environment for data transformation.
 
-**Design Principles**:
+Design Principles:
     - Idempotency: Uses 'DROP TABLE IF EXISTS' to allow safe re-execution.
     - Schema Governance: Enforces controlled table definitions and naming
       conventions across the Silver layer.
