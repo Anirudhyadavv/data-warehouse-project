@@ -2,13 +2,13 @@
 ===============================================================================
 Stored Procedure: Load Silver Layer (Bronze → Silver)
 ===============================================================================
-Purpose:
-    This procedure serves as the authoritative transformation layer of the
+Overview:
+    This procedure implements the Silver-layer transformation logic of the
     Data Warehouse, converting raw Bronze-stage data into a cleaned,
     standardized, and validated Silver layer.
 
-    It enforces data quality and business rules so downstream analytical and
-    Gold-layer models can operate on trusted, consistent datasets.
+    It enforces data quality and business rules to ensure downstream analytical
+	and Gold-layer models operate on trusted, consistent datasets.
 
 Business Logic & Transformations:
     - Data Cleansing: Removes leading and trailing whitespace to prevent key
@@ -81,7 +81,9 @@ BEGIN
     -- Transforming crm_prd_info (Deduplicating by prd_key)
     TRUNCATE TABLE dw_silver.crm_prd_info;
     INSERT INTO dw_silver.crm_prd_info (prd_id, cat_id, prd_key, prd_nm, prd_cost, prd_line, prd_start_dt, prd_end_dt)
-        SELECT 
+        SELECT prd_id, cat_id, prd_key, prd_nm, prd_cost, prd_line, prd_start_dt, prd_end_dt
+        FROM (
+			SELECT
             prd_id,
             REPLACE(SUBSTRING(prd_key, 1, 5), '-', '_') AS cat_id, -- Extract category ID
             SUBSTRING(prd_key, 7, LENGTH(prd_key)) AS prd_key,      -- Extract product key
@@ -94,45 +96,68 @@ BEGIN
                 WHEN UPPER(TRIM(prd_line)) = 'T' THEN 'Touring'
 				ELSE 'n/a'
             END AS prd_line, -- Map product line codes to descriptive values
-            prd_start_dt,
-            prd_end_dt
-        FROM dw_bronze.crm_prd_info;
+            CAST(prd_start_dt AS DATE) AS prd_start_dt,
+			CAST(
+				DATE_SUB(LEAD(prd_start_dt) OVER (PARTITION BY prd_key ORDER BY prd_start_dt), INTERVAL 1 DAY )
+                AS DATE
+				) AS prd_end_dt
+        FROM dw_bronze.crm_prd_info ) AS sub;
     SET row_count_c_prd = ROW_COUNT();
 
     -- Transforming crm_sales_details
     TRUNCATE TABLE dw_silver.crm_sales_details;
-    INSERT INTO dw_silver.crm_sales_details 
-		(sls_ord_num, sls_prd_key, sls_cust_id, sls_order_dt, sls_ship_dt, sls_due_dt, sls_sales, sls_quantity, sls_price)
-    
-    SELECT 
-		sls_ord_num, sls_prd_key, sls_cust_id, 
-        
-        CASE 
-			WHEN sls_order_dt = 0 THEN NULL
-            ELSE sls_order_dt
-		END AS sls_order_dt,
-        CASE    
-            WHEN sls_ship_dt = 0 THEN NULL  
-            ELSE sls_ship_dt
-		END AS sls_ship_dt,
-        CASE
-            WHEN sls_due_dt = 0 THEN NULL 
-            ELSE sls_due_dt
-		END AS sls_due_dt,
-        
-        CASE 
-			WHEN sls_sales IS NULL OR sls_sales <= 0 OR sls_sales != sls_quantity * ABS(sls_price) 
-			THEN sls_quantity * ABS(sls_price)
-			ELSE sls_sales
-		END AS sls_sales, -- Recalculate sales if original value is missing or incorrect,
-		ABS(sls_quantity), 
-        CASE 
-			WHEN sls_price <=0 OR sls_price IS NULL
-            THEN sls_sales/ NULLIF (sls_quantity,0)
-			ELSE sls_price -- Derive price if original value is invalid
-		END AS sls_price
-    FROM dw_bronze.crm_sales_details;
-    SET row_count_c_sales = ROW_COUNT();
+
+		INSERT INTO dw_silver.crm_sales_details
+		(
+			sls_ord_num,
+			sls_prd_key,
+			sls_cust_id,
+			sls_order_dt,
+			sls_ship_dt,
+			sls_due_dt,
+			sls_sales,
+			sls_quantity,
+			sls_price
+		)
+		SELECT
+			sls_ord_num,
+			sls_prd_key,
+			sls_cust_id,
+
+			CASE WHEN sls_order_dt = 0 THEN NULL ELSE sls_order_dt END,
+			CASE WHEN sls_ship_dt  = 0 THEN NULL ELSE sls_ship_dt  END,
+			CASE WHEN sls_due_dt   = 0 THEN NULL ELSE sls_due_dt   END,
+
+			-- FINAL sales calculation
+			-- IMPORTANT:-- Quantity and price are cleaned in a subquery to avoid circular
+			-- column dependencies when calculating sls_sales.
+			sls_quantity * sls_price AS sls_sales,     
+			sls_quantity,							   
+			sls_price
+		FROM
+		(
+			SELECT
+				sls_ord_num,
+				sls_prd_key,
+				sls_cust_id,
+				sls_order_dt,
+				sls_ship_dt,
+				sls_due_dt,
+
+				-- Step 1: clean quantity
+				ABS(sls_quantity) AS sls_quantity,
+
+				-- Step 1: clean price
+				CASE
+					WHEN sls_price IS NULL OR sls_price <= 0
+					THEN sls_sales / NULLIF(sls_quantity, 0)
+					ELSE ABS(sls_price)
+				END AS sls_price
+
+			FROM dw_bronze.crm_sales_details
+		) t;
+
+			SET row_count_c_sales = ROW_COUNT();
 
     -- ============================================================================
     -- 2. ERP Tables Transformation
