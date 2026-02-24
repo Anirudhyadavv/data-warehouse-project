@@ -34,7 +34,7 @@ FROM
         AVG(price)                       AS avg_price
     FROM dw_gold.fact_sales
     WHERE order_date IS NOT NULL
-    GROUP BY DATE_FORMAT(order_date, '%Y-%m')
+    GROUP BY order_month
 ) monthly_sales
 ORDER BY order_month;
 
@@ -56,6 +56,6 @@ FROM
         COUNT(DISTINCT customer_key)     AS monthly_customers
     FROM dw_gold.fact_sales
     WHERE order_date IS NOT NULL
-    GROUP BY DATE_FORMAT(order_date, '%Y-%m')
+    GROUP BY Dorder_month
 ) customer_activity
 ORDER BY order_month;
