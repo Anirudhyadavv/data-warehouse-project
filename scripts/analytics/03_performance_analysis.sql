@@ -7,11 +7,6 @@ Purpose:
     - Identify improving or declining products.
     - Support benchmarking and performance-driven decisions.
 
-Why Performance Analysis:
-    - Trend analysis shows direction.
-    - Performance analysis explains whether entities are improving or worsening
-      relative to previous periods.
-
 Data Source:
     - dw_gold.fact_sales
     - dw_gold.dim_products
@@ -21,6 +16,7 @@ Entities Analyzed:
 
 ===============================================================================
 */
+
 
 
 -- ============================================================================
