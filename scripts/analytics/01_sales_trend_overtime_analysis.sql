@@ -30,7 +30,7 @@ SELECT
     SUM(quantity)                    AS total_quantity
 FROM dw_gold.fact_sales
 WHERE order_date IS NOT NULL
-GROUP BY DATE_FORMAT(order_date, '%Y-%m')
+GROUP BY order_month
 ORDER BY order_month;
 
 
@@ -47,5 +47,5 @@ SELECT
     SUM(quantity)                    AS total_quantity
 FROM dw_gold.fact_sales
 WHERE order_date IS NOT NULL
-GROUP BY YEAR(order_date)
-ORDER BY order_year;
+GROUP BY order_month
+ORDER BY order_month;
