@@ -1,20 +1,25 @@
 /*
 ===============================================================================
-Cumulative Analysis (Monthly)
+Cumulative Analysis
 ===============================================================================
 Purpose:
-    - Track cumulative (running) total sales over time.
-    - Understand long-term revenue accumulation.
-    - Observe how average selling price evolves as the business grows.
+    - Track long-term business progress using cumulative metrics.
+    - Understand how revenue and customer engagement accumulate over time.
+    - Support strategic and executive-level performance analysis.
 
-Business Question:
-    - How much revenue has the business generated as of each month?
+Business Questions:
+    1. How much total revenue has the business generated as of each month?
+    2. How has customer engagement grown cumulatively over time?
 
-Notes:
-    - Gold layer is implemented as VIEWS.
-    - NULL order dates are excluded by design (cleaned in Silver).
 ===============================================================================
 */
+
+
+-- ============================================================================
+-- 1. CUMULATIVE SALES ANALYSIS (MONTHLY)
+-- ============================================================================
+-- Business Question:
+-- How much revenue has the business generated in total as of each month?
 
 SELECT
     order_month,
@@ -25,10 +30,32 @@ FROM
 (
     SELECT
         DATE_FORMAT(order_date, '%Y-%m') AS order_month,
-        SUM(sales_amount) AS total_sales,
-        AVG(price) AS avg_price
+        SUM(sales_amount)                AS total_sales,
+        AVG(price)                       AS avg_price
     FROM dw_gold.fact_sales
     WHERE order_date IS NOT NULL
     GROUP BY DATE_FORMAT(order_date, '%Y-%m')
 ) monthly_sales
+ORDER BY order_month;
+
+
+-- ============================================================================
+-- 2. CUMULATIVE CUSTOMER ENGAGEMENT ANALYSIS (MONTHLY)
+-- ============================================================================
+-- Business Question:
+-- How has customer engagement accumulated over time?
+
+SELECT
+    order_month,
+    monthly_customers,
+    SUM(monthly_customers) OVER (ORDER BY order_month) AS cumulative_customers
+FROM
+(
+    SELECT
+        DATE_FORMAT(order_date, '%Y-%m') AS order_month,
+        COUNT(DISTINCT customer_key)     AS monthly_customers
+    FROM dw_gold.fact_sales
+    WHERE order_date IS NOT NULL
+    GROUP BY DATE_FORMAT(order_date, '%Y-%m')
+) customer_activity
 ORDER BY order_month;
