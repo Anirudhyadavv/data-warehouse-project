@@ -1,16 +1,19 @@
 /*
 ===============================================================================
-Cumulative Analysis
+Cumulative Customer Engagement & Sales Analysis (Monthly)
 ===============================================================================
 Purpose:
-    - Track long-term business progress using cumulative metrics.
-    - Understand how revenue and customer engagement accumulate over time.
-    - Support strategic and executive-level performance analysis.
+    - Track how customer engagement and revenue accumulate over time.
+    - Compare growth patterns between customers and sales.
+    - Support long-term business performance analysis.
 
 Business Questions:
-    1. How much total revenue has the business generated as of each month?
-    2. How has customer engagement grown cumulatively over time?
+    1. How does customer engagement accumulate month over month?
+    2. How does revenue accumulate alongside customer engagement?
 
+Notes:
+    - Cumulative customers represent cumulative monthly participation,
+      not total unique customers across all time.
 ===============================================================================
 */
 
@@ -34,28 +37,33 @@ FROM
         AVG(price)                       AS avg_price
     FROM dw_gold.fact_sales
     WHERE order_date IS NOT NULL
-    GROUP BY order_month
+    GROUP BY DATE_FORMAT(order_date, '%Y-%m')
 ) monthly_sales
 ORDER BY order_month;
 
 
+
 -- ============================================================================
--- 2. CUMULATIVE CUSTOMER ENGAGEMENT ANALYSIS (MONTHLY)
+-- 2. CUMULATIVE CUSTOMER ENGAGEMENT VS SALES
 -- ============================================================================
--- Business Question:
--- How has customer engagement accumulated over time?
+-- Business Questions:
+-- 1. How does customer engagement accumulate over time?
+-- 2. How does revenue accumulate alongside customer engagement?
 
 SELECT
     order_month,
     monthly_customers,
-    SUM(monthly_customers) OVER (ORDER BY order_month) AS cumulative_customers
-FROM
+    SUM(monthly_customers) OVER (ORDER BY order_month) AS cumulative_monthly_customers,
+    monthly_sales,
+    SUM(monthly_sales) OVER (ORDER BY order_month)     AS cumulative_monthly_sales
+FROM 
 (
-    SELECT
+    SELECT 
         DATE_FORMAT(order_date, '%Y-%m') AS order_month,
-        COUNT(DISTINCT customer_key)     AS monthly_customers
+        COUNT(DISTINCT customer_key)     AS monthly_customers,
+        SUM(sales_amount)                AS monthly_sales
     FROM dw_gold.fact_sales
     WHERE order_date IS NOT NULL
-    GROUP BY Dorder_month
+    GROUP BY DATE_FORMAT(order_date, '%Y-%m')
 ) customer_activity
 ORDER BY order_month;
