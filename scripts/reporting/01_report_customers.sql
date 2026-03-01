@@ -18,12 +18,10 @@ Highlights:
 -- =============================================================================
 DROP VIEW IF EXISTS dw_gold.report_customers;
 
-CREATE VIEW dw_gold.report_customers AS
-
+CREATE VIEW dw_gold.report_customers AS        -- Join fact and customer dimension
+   
 WITH base_query AS (
-    /*---------------------------------------------------------------------------
-    1) Base Query: Join fact and customer dimension
-    ---------------------------------------------------------------------------*/
+
     SELECT
         f.order_number,
         f.product_key,
@@ -40,10 +38,8 @@ WITH base_query AS (
     WHERE f.order_date IS NOT NULL
 ),
 
-customer_aggregation AS (
-    /*---------------------------------------------------------------------------
-    2) Customer Aggregation: One row per customer
-    ---------------------------------------------------------------------------*/
+customer_aggregation AS (                  -- Customer Aggregation
+    
     SELECT
         customer_key,
         customer_number,
@@ -100,7 +96,7 @@ SELECT
     total_products,
     lifespan_months,
 
-    -- Average order value
+    -- Average order value    
     CASE
         WHEN total_orders = 0 THEN 0
         ELSE total_sales / total_orders
