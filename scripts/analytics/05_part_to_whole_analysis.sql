@@ -3,8 +3,8 @@
 Part-to-Whole Analysis
 ===============================================================================
 Purpose:
-    - Identify how individual categories contribute to total sales.
-    - Highlight high-impact business segments.
+    - Identify how individual product categories contribute to total sales.
+    - Highlight high-impact categories driving overall revenue.
 
 Data Source:
     - dw_gold.fact_sales
@@ -12,16 +12,12 @@ Data Source:
 ===============================================================================
 */
 
+
 -- ============================================================================
 -- SALES CONTRIBUTION BY PRODUCT CATEGORY
 -- ============================================================================
 -- Business Question:
 -- Which product categories contribute the most to overall sales?
-
-WITH category_sales AS (
-    ...
-)
-SELECT ...
 
 WITH category_sales AS (
     SELECT
