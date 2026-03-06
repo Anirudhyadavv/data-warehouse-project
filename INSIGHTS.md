@@ -1,70 +1,75 @@
-# Business Insights
+# Business Insights from the Data Warehouse
 
-This document summarizes key insights derived from the SQL analytics performed in this project.
+After building the data warehouse and running analytical queries on the Gold layer, I explored the reporting views to understand customer behavior, product performance, and sales trends.
 
-The insights are based on data stored in the Gold analytical layer and the reporting views built on top of it.
-
----
-
-# 1. Customer Behavior Insights
-
-### Majority of Customers are One-Time Buyers
-Analysis of purchase frequency shows that approximately **63% of customers place only one order**.
-
-This indicates that most customers interact with the business only once, suggesting an opportunity to improve customer retention through loyalty programs or targeted marketing.
+The following insights summarize what I observed from the dataset.
 
 ---
 
-### Small Group of Customers Drive Repeat Purchases
-Only around **37% of customers make repeat purchases**, and less than **1% of customers place more than five orders**.
+# 1. Customer Purchasing Behavior
 
-This suggests that a very small group of loyal customers contributes disproportionately to long-term revenue.
+## Most customers buy only once
+When I analyzed purchase frequency, I found that **a large majority of customers place only one order**.
 
----
-
-### Customer Base is Dominated by Older Age Groups
-Customer demographic analysis shows that most customers fall into the **40–50+ age groups**, while significantly fewer customers belong to younger segments.
-
-This suggests the company’s products may appeal more to mature customers with higher purchasing power.
+This suggests that the business attracts many first-time buyers but has an opportunity to improve **customer retention** through loyalty programs or follow-up engagement.
 
 ---
 
-# 2. Product Performance Insights
+## Repeat customers are relatively small in number
+Only a smaller portion of customers return to make additional purchases.
 
-### High-End Bikes Generate the Majority of Revenue
-Premium bike models such as the **Mountain-200 and Road-150 series** generate extremely high revenue compared to other products.
-
-These products act as the primary revenue drivers for the business.
+Even fewer customers make **more than five purchases**, which indicates that a small group of loyal buyers likely contributes a significant share of long-term revenue.
 
 ---
 
-### Accessories Drive Order Volume but Lower Revenue
-Low-cost accessories such as **helmets, bottles, and tire tubes** generate large numbers of orders but relatively low total revenue.
+## Customer base is skewed toward older age groups
+From the age segmentation analysis, most customers fall into the **40+ age range**.
 
-These items likely function as add-on purchases alongside larger product orders.
-
----
-
-### Product Portfolio Includes Multiple Variants
-Many products appear in multiple variants such as frame sizes or colors.  
-Demand appears relatively balanced across these variants, indicating good product coverage across customer preferences.
+This suggests that the company’s products may appeal more to mature customers with higher purchasing power, while younger segments may be underrepresented.
 
 ---
 
-# 3. Sales Trends Insights
+# 2. Product Performance
 
-### Strong Growth Over Time
-Sales analysis reveals strong growth from 2011 to 2013, with significant increases in revenue, order volume, and active customers.
+## Premium bikes drive most of the revenue
+The analysis of product sales showed that **high-end bike models generate the majority of revenue**.
 
-This indicates rapid business expansion during that period.
-
----
-
-### Product Catalog Expansion
-The number of active products sold increased significantly over time, suggesting that product expansion contributed to business growth.
+Products such as the Mountain and Road series consistently appear among the highest revenue-generating items.
 
 ---
 
-# Summary
+## Accessories sell frequently but generate lower revenue
+Lower-priced items such as helmets, bottles, and other accessories appear in **many orders**, but their contribution to total revenue is smaller.
 
-The analysis reveals that the business is primarily driven by high-value bike purchases while accessories contribute to purchase volume. Customer retention opportunities exist, as most customers make only a single purchase. Additionally, product expansion and increased customer demand appear to have fueled strong sales growth over the observed time period.
+These items likely function as **add-on purchases** alongside major products.
+
+---
+
+## Product variants show balanced demand
+Many bike models appear in multiple variants (for example different frame sizes).
+
+Sales across these variants appear relatively balanced, indicating that the product range successfully covers different customer preferences.
+
+---
+
+# 3. Sales Trends
+
+## Strong growth over the analyzed period
+The sales trend analysis shows that both revenue and order volume increased significantly over time.
+
+This indicates that the business experienced **strong growth during the observed years**.
+
+---
+
+## Expansion of the product catalog
+Over time, more products appear in sales transactions.
+
+This suggests that **product expansion may have contributed to the growth in revenue and customer engagement**.
+
+---
+
+# Final Thoughts
+
+Overall, the analysis suggests that the business relies heavily on high-value bike sales while accessories support order volume. 
+
+At the same time, the high proportion of one-time buyers highlights a potential opportunity to improve customer retention strategies.
