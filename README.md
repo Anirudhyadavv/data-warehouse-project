@@ -3,13 +3,11 @@
 
 An end‑to‑end SQL project demonstrating how raw business data can be transformed into a structured **data warehouse** and used to generate **actionable business insights**.
 
-This project simulates a real analytics workflow followed in many organizations: from ingesting operational data to producing analytical reports that support decision‑making.
+This project simulates a real analytics workflow followed in many organizations: from ingesting operational data to producing analytical reports and visualized through Power BI dashboards that support decision‑making.
 
 ---
 
 ## Project Overview
-
-This project demonstrates an end-to-end analytics workflow where raw ERP and CRM data is transformed into a structured data warehouse and visualized through Power BI dashboards.
 
 | Stage | Description |
 |------|-------------|
@@ -38,6 +36,9 @@ The objective of this project is to demonstrate how to:
 ## Data Architecture
 
 The warehouse follows a layered architecture to ensure clean, reliable, and scalable data processing.
+
+### High Level Architecture
+![Home](./images/home.png)
 
 ```
 Source Systems (ERP & CRM CSV files)
@@ -154,16 +155,14 @@ These reports simulate the type of **datasets used by BI dashboards**.
 
 ---
 
-## Skills Demonstrated
+## 🧠 Business Questions Answered
 
-| Category | Skills |
-|---------|-------|
-| Data Engineering | Data cleaning, ETL logic, layered warehouse architecture |
-| SQL Analytics | Aggregations, CTEs, Window Functions, Time Analysis |
-| Data Modeling | Fact & Dimension design (Star Schema) |
-| Business Analysis | Customer segmentation, product performance analysis |
-| Reporting | Analytical SQL views for business reporting |
-
+- Which products generate the highest revenue?
+- How have sales evolved over time?
+- Which customer segments contribute the most revenue?
+- What categories drive the majority of total sales?
+- Which products are high‑performers vs low‑performers?
+  
 ---
 
 ## 💡 Business Recommendations
@@ -176,23 +175,12 @@ These reports simulate the type of **datasets used by BI dashboards**.
 
 ---
 
-## 🧠 Business Questions Answered
+## ⚠️ Data Limitations
 
-- Which products generate the highest revenue?
-- How have sales evolved over time?
-- Which customer segments contribute the most revenue?
-- What categories drive the majority of total sales?
-- Which products are high‑performers vs low‑performers?
-  
----
-
-## 🛠️ Tools Used
-
-- SQL (MySQL)
-- Window Functions
-- Data Warehousing Concepts (Medallion Architecture)  
-- DAX             
-- Git & GitHub
+- Partial data for 2010 and 2014  
+- No prior year data for 2011  
+- No returns/refunds data available  
+- Customer segmentation is lifetime-based
 
 ---
 
@@ -206,15 +194,27 @@ These reports simulate the type of **datasets used by BI dashboards**.
 6. Use reporting views for BI dashboards  
 
 ---
+
+## Skills Demonstrated
+
+| Category | Skills |
+|---------|-------|
+| Data Engineering | Data cleaning, ETL logic, layered warehouse architecture |
+| SQL Analytics | Aggregations, CTEs, Window Functions, Time Analysis |
+| Data Modeling | Fact & Dimension design (Star Schema) |
+| Business Analysis | Customer segmentation, product performance analysis |
+| Reporting | Analytical SQL views for business reporting |
+
 ---
 
-## ⚠️ Data Limitations
+## 🛠️ Tools Used
+- SQL (MySQL)
+- Window Functions
+- Data Warehousing Concepts (Medallion Architecture)  
+- DAX             
+- Git & GitHub
 
-- Partial data for 2010 and 2014  
-- No prior year data for 2011  
-- No returns/refunds data available  
-- Customer segmentation is lifetime-based
-
+---
 ---
 
 ## 👤 About Me
