@@ -40,30 +40,13 @@ The warehouse follows a layered architecture to ensure clean, reliable, and scal
 
 ![High Level Architecture](docs/data_architecture.png)
 
-```
-Source Systems (ERP & CRM CSV files)
-            │
-            ▼
-        Bronze Layer
-     Raw Data Ingestion
-            │
-            ▼
-        Silver Layer
- Data Cleaning & Standardization
-            │
-            ▼
-         Gold Layer
-   Analytical Data Model
-            │
-            ▼
-     Analytics & Reporting
-```
-
 ---
 
 ## Data Model
 
 The Gold layer uses a **star schema** optimized for analytical queries.
+
+![STAR SCHEMA](docs/data_model.png)
 
 | Table | Type | Description |
 |------|------|-------------|
@@ -71,13 +54,9 @@ The Gold layer uses a **star schema** optimized for analytical queries.
 | dim_customers | Dimension | Customer attributes and demographics |
 | dim_products | Dimension | Product hierarchy and attributes |
 
-This structure allows efficient analysis across:
-
-- Customers
-- Products
-- Time
-
 ---
+
+
 
 ## 🧠 Business Questions Answered
 
