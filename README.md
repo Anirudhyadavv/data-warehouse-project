@@ -5,6 +5,12 @@ An end‑to‑end analytics project demonstrating how raw business data can be t
 
 This project simulates a real analytics workflow followed in many organizations: from ingesting operational data to producing analytical reports and visualized through Power BI dashboards that support decision‑making.
 
+## 🚀 Live Dashboard
+
+🔗 [View Power BI Dashboard](https://app.powerbi.com/view?r=YOUR-LINK)
+
+> ⚡ Interactive dashboard available above — explore filters, drilldowns, and insights in real-time.
+
 ---
 
 ## Project Overview
