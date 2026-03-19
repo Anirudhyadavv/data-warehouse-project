@@ -86,7 +86,7 @@ In this page, we analyzed revenue trends over time and observed steady growth fr
 
 In this page, we evaluated customer purchasing behavior and found that approximately 80% of customers made only a single purchase, indicating a significant retention challenge. Additionally, a small segment of high-value (VIP) customers contributes a disproportionately large share of total revenue, suggesting that improving repeat purchases and customer lifetime value could drive substantial growth.
 
-![Customer](docs/AW_Sales_Dashboard(Customers_Page).png)
+![Customer](docs/Dashboard_customers_page.png)
 
 ### 📦 Product Analysis
 
