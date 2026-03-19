@@ -72,8 +72,7 @@ The Gold layer uses a **star schema** optimized for analytical queries.
 ---
 ### 🏠 Home Page
 
-Introduces the analytics solution with key metrics and architecture, providing a high-level understanding of business performance.
-
+Introduces the analytics solution with key metrics and explains the underlying data architecture (Medallion model and star schema) used to transform raw data into analytics-ready insights, setting the foundation for deeper analysis.
 ![Home](docs/Dashboard_home_page.png)
 
 ---
